@@ -2,22 +2,23 @@ package operator_tests;
 
 public class Test {
 	public static void main(String[] args) {
-		int a = 1;
-		int b = 15;
-		int c = 3;
+		int a = foo(1, 2, 3);
+		System.out.println(a);
+	}
 
-		if (a + b <= 30) {
-		    c = 4;
+	private static int foo(int a, int b, int c) {
+	    if (a + b <= 50) {
+	        c = 4;
         }
         else {
-		    a = 0;
+	        a = 0;
         }
 
         while (c > 0) {
-		    a = a + 1;
-		    c = c - 1;
+	        c = c - 1;
+	        a = a + 1;
         }
 
-		System.out.println(a);
-	}
+        return a;
+    }
 }

@@ -31,15 +31,14 @@ public class Mutator implements Opcodes {
 		List<MethodNode> methods = visitor.methods;
         for (MethodNode method : methods) {
             if (! method.name.equals("<init>")) { // Ignore constructor (nothing going on).
-                Mutator.replacement(method);
-//                switch(rand.nextInt(3)) {
-//                    case 0:
-//                        Mutator.insertion(method);
-//                    case 1:
-//                        Mutator.deletion(method);
-//                    case 2:
-//                        Mutator.replacement(method);
-//                }
+                switch(rand.nextInt(3)) {
+                    case 0:
+                        Mutator.insertion(method);
+                    case 1:
+                        Mutator.deletion(method);
+                    case 2:
+                        Mutator.replacement(method);
+                }
             }
         }
 
@@ -111,7 +110,6 @@ public class Mutator implements Opcodes {
      */
     public static void replacement(MethodNode method, int position) {
         AbstractInsnNode instruction = method.instructions.get(rand.nextInt(method.instructions.size()));
-        boolean success = false;
         instruction = instruction.clone(Helpers.cloneLabels(method));
         Mutator.replacement(method, position, instruction);
     }

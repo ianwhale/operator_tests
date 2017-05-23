@@ -1,9 +1,6 @@
 package operator_tests;
 
-
-import org.objectweb.asm.tree.AbstractInsnNode;
-import org.objectweb.asm.tree.LabelNode;
-import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,8 +13,12 @@ public class Helpers {
      * @return labelMap Map
      */
     public static Map<LabelNode, LabelNode> cloneLabels(MethodNode method) {
+        return cloneLabels(method.instructions);
+    }
+
+    public static Map<LabelNode, LabelNode> cloneLabels(InsnList insns) {
         HashMap<LabelNode, LabelNode> labelMap = new HashMap<LabelNode, LabelNode>();
-        for (AbstractInsnNode node = method.instructions.getFirst(); node != null; node = node.getNext()) {
+        for (AbstractInsnNode node = insns.getFirst(); node != null; node = node.getNext()) {
             if (node.getType() == AbstractInsnNode.LABEL) {
                 labelMap.put((LabelNode)node, new LabelNode());
             }
