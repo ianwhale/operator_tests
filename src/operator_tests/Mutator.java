@@ -5,7 +5,6 @@ import java.util.List;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Random;
-
 import org.objectweb.asm.*;
 import org.objectweb.asm.tree.*;
 
@@ -30,21 +29,22 @@ public class Mutator implements Opcodes {
 		List<MethodNode> methods = visitor.methods;
         for (MethodNode method : methods) {
             if (! method.name.equals("<init>")) { // Ignore constructor (nothing going on).
-                switch(rand.nextInt(3)) {
-                    case 0:
-                        Mutator.insertion(method);
-                    case 1:
-                        Mutator.deletion(method);
-                    case 2:
-                        Mutator.replacement(method);
-                }
+                Mutator.insertion(method);
+//                switch(rand.nextInt(3)) {
+//                    case 0:
+//                        Mutator.insertion(method);
+//                    case 1:
+//                        Mutator.deletion(method);
+//                    case 2:
+//                        Mutator.replacement(method);
+//                }
             }
         }
 
         ClassWriter writer = new ClassWriter(0);
         visitor.accept(writer);
 
-		FileOutputStream out = new FileOutputStream("./" + FILEOBJ.getName());
+		FileOutputStream out = new FileOutputStream("./out/experiments/" + FILEOBJ.getName());
 		out.write(writer.toByteArray());
 		out.close();
     }

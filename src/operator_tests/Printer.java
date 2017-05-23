@@ -11,7 +11,7 @@ import org.objectweb.asm.util.*;
 
 public class Printer {
 	
-	private static final String CLASSFILE = "/home/ian/eclipse_projects/operator_tests/bin/operator_tests/Test.class";
+	private static final String CLASSFILE = "/home/ian/gi/operator_tests/out/production/operator_tests/operator_tests/Test.class";
 	
 	public static void main(String[] args) throws Exception {
 		FileInputStream in = new FileInputStream(CLASSFILE);
