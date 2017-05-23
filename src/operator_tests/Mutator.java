@@ -1,8 +1,10 @@
 package operator_tests;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.io.FileInputStream;
+import java.util.Map;
 import java.io.FileOutputStream;
 import java.util.Random;
 import org.objectweb.asm.*;
@@ -29,7 +31,7 @@ public class Mutator implements Opcodes {
 		List<MethodNode> methods = visitor.methods;
         for (MethodNode method : methods) {
             if (! method.name.equals("<init>")) { // Ignore constructor (nothing going on).
-                Mutator.insertion(method);
+                Mutator.replacement(method);
 //                switch(rand.nextInt(3)) {
 //                    case 0:
 //                        Mutator.insertion(method);
@@ -50,10 +52,18 @@ public class Mutator implements Opcodes {
     }
 
     /**
+     * Randomly mutate a method's code.
+     * @param method MethodNode
+     */
+    public static void mutate(MethodNode method) {
+
+    }
+
+    /**
      * Insertion mutation, insert an instruction after a random index.
      * @param method MethodNode
      */
-    private static void insertion(MethodNode method) {
+    public static void insertion(MethodNode method) {
         Mutator.insertion(method, rand.nextInt(method.instructions.size()));
     }
 
@@ -101,6 +111,8 @@ public class Mutator implements Opcodes {
      */
     public static void replacement(MethodNode method, int position) {
         AbstractInsnNode instruction = method.instructions.get(rand.nextInt(method.instructions.size()));
+        boolean success = false;
+        instruction = instruction.clone(Helpers.cloneLabels(method));
         Mutator.replacement(method, position, instruction);
     }
 
